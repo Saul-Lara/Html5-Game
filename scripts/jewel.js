@@ -5,7 +5,28 @@ var jewel = (function() {
 		executeRunning = false;
 
 	function executeScriptQueue() {
-		
+		var next = scriptQueue[0],
+			first,
+			script;
+
+		if(next && next.loaded){
+			executeRunning = true;
+
+			scriptQueue.shift();	// Remove the first element in the queue
+			first = document.getElementsByTagName("script")[0];
+			script = document.createElemnt("script");
+			script.onload = function () {
+				if(next.callback){
+					next.callback();
+				}
+
+				executeScriptQueue();	// Try to execute more scripts
+			};
+			script.src = next.src;
+			first.parentNode.insertBefore(script, first);
+		} else {
+			executeRunning = false;
+		}
 	}
 
 	function load(src, callback){
