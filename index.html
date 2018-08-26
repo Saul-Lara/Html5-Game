@@ -5,6 +5,11 @@
 	<title>Jewel Warrior</title>
 	<link rel="stylesheet" type="text/css" href="styles/main.css">
 	<script src="scripts/jewel.js"></script>
+	<script>
+		window.addEventListener("load", function() {
+			jewel.load("scripts/dom.js", jewel.setup);
+		});
+	</script>
 </head>
 <body>
 	<div id="game">

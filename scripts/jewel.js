@@ -14,7 +14,7 @@ var jewel = (function() {
 
 			scriptQueue.shift();	// Remove the first element in the queue
 			first = document.getElementsByTagName("script")[0];
-			script = document.createElemnt("script");
+			script = document.createElement("script");
 			script.onload = function () {
 				if(next.callback){
 					next.callback();
@@ -53,7 +53,7 @@ var jewel = (function() {
 	}
 
 	function setup() {
-		
+		console.log("Success");
 	}
 
 	return {
