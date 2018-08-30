@@ -4,6 +4,13 @@ var jewel = (function() {
 		numResources = 0,
 		executeRunning = false;
 
+	var settings = {
+		rows : 8,
+		cols : 8,
+		baseScore : 100,
+		numJewelTypes : 7
+	};
+
 	function executeScriptQueue() {
 		var next = scriptQueue[0],
 			first,
@@ -54,6 +61,9 @@ var jewel = (function() {
 
 	function setup() {
 		jewel.showScreen("splash-screen");
+		jewel.dom.bind(document, "touchmove", function(event) {
+			event.preventDefault();
+		});
 	}
 
 	// Hide the screen active (if any) and show the screen with specified id
@@ -77,10 +87,11 @@ var jewel = (function() {
 	}
 
 	return {
-		load: load,
-		setup: setup,
+		load : load,
+		setup : setup,
 		showScreen : showScreen,
-		screens : {}
-	};
+		screens : {},
+		settings : settings
+	}
 
 })();
