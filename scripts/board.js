@@ -133,7 +133,7 @@ jewel.board = (function () {
 		return chains;
 	}
 
-	function check() {
+	function check(events) {
 		var chains = getChains(),
 			hadChains = false,
 			score = 0,
@@ -148,6 +148,8 @@ jewel.board = (function () {
 					hadChains = true;
 					gaps[x]++;
 					removed.push({ x: x, y: y, type: getJewel(x, y) });
+
+					score += baseScore * Math.pow(2, chains[x][y] - 3); // Add points to score
 				} else if (gaps[x] > 0) {
 					moved.push({
 						toX: x,
@@ -173,6 +175,19 @@ jewel.board = (function () {
 					type: jewels[x][y],
 				});
 			}
+		}
+
+		events = events || [];
+
+		if (hadChains) {
+			events.push(
+				{ type: "remove", data: removed },
+				{ type: "score", data: score },
+				{ type: "move", data: moved }
+			);
+			return check(events);
+		} else {
+			return events;
 		}
 	}
 
