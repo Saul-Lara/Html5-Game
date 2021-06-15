@@ -1,14 +1,14 @@
-var jewel = (function() {
+var jewel = (function () {
 	var scriptQueue = [],
 		numResourcesLoaded = 0,
 		numResources = 0,
 		executeRunning = false;
 
 	var settings = {
-		rows : 8,
-		cols : 8,
-		baseScore : 100,
-		numJewelTypes : 7
+		rows: 8,
+		cols: 8,
+		baseScore: 100,
+		numJewelTypes: 7,
 	};
 
 	function executeScriptQueue() {
@@ -16,18 +16,18 @@ var jewel = (function() {
 			first,
 			script;
 
-		if(next && next.loaded){
+		if (next && next.loaded) {
 			executeRunning = true;
 
-			scriptQueue.shift();	// Remove the first element in the queue
+			scriptQueue.shift(); // Remove the first element in the queue
 			first = document.getElementsByTagName("script")[0];
 			script = document.createElement("script");
 			script.onload = function () {
-				if(next.callback){
+				if (next.callback) {
 					next.callback();
 				}
 
-				executeScriptQueue();	// Try to execute more scripts
+				executeScriptQueue(); // Try to execute more scripts
 			};
 			script.src = next.src;
 			first.parentNode.insertBefore(script, first);
@@ -36,14 +36,15 @@ var jewel = (function() {
 		}
 	}
 
-	function load(src, callback){
+	function load(src, callback) {
 		var image, queueEntry;
 		numResources++;
 
-		queueEntry = {	// Add this resource to the execution queue
+		queueEntry = {
+			// Add this resource to the execution queue
 			src: src,
 			callback: callback,
-			loaded: false
+			loaded: false,
 		};
 
 		scriptQueue.push(queueEntry);
@@ -52,7 +53,7 @@ var jewel = (function() {
 		image.onload = image.onerror = function () {
 			numResourcesLoaded++;
 			queueEntry.loaded = true;
-			if(!executeRunning){
+			if (!executeRunning) {
 				executeScriptQueue();
 			}
 		};
@@ -61,7 +62,7 @@ var jewel = (function() {
 
 	function setup() {
 		jewel.showScreen("splash-screen");
-		jewel.dom.bind(document, "touchmove", function(event) {
+		jewel.dom.bind(document, "touchmove", function (event) {
 			event.preventDefault();
 		});
 	}
@@ -73,25 +74,35 @@ var jewel = (function() {
 			activeScreen = $("#game .screen.active")[0],
 			screen = $("#" + screenId)[0];
 
-		if (!jewel.screens[screenId]){
+		if (!jewel.screens[screenId]) {
 			alert("This module is not implemented yet.");
 			return;
 		}
 
 		if (activeScreen) {
-			dom.removeClass(activeScreen, "active")
+			dom.removeClass(activeScreen, "active");
 		}
 		dom.addClass(screen, "active");
 
 		jewel.screens[screenId].run();
 	}
 
-	return {
-		load : load,
-		setup : setup,
-		showScreen : showScreen,
-		screens : {},
-		settings : settings
+	function hasWebWorkers() {
+		return "Worker" in window;
 	}
 
+	function preload(src) {
+		var image = new Image();
+		image.src = src;
+	}
+
+	return {
+		load: load,
+		setup: setup,
+		showScreen: showScreen,
+		screens: {},
+		settings: settings,
+		hasWebWorkers: hasWebWorkers,
+		preload: preload,
+	};
 })();
