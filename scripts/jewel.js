@@ -96,6 +96,10 @@ var jewel = (function () {
 		image.src = src;
 	}
 
+	function getLoadProgress() {
+		return numResourcesLoaded / numResources;
+	}
+
 	return {
 		load: load,
 		setup: setup,
@@ -104,5 +108,6 @@ var jewel = (function () {
 		settings: settings,
 		hasWebWorkers: hasWebWorkers,
 		preload: preload,
+		getLoadProgress: getLoadProgress,
 	};
 })();

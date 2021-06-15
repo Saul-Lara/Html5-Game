@@ -19,13 +19,13 @@
 		<script>
 			window.addEventListener("load", function () {
 				jewel.load("scripts/dom.js");
-				jewel.load("scripts/screen.splash.js");
+				jewel.load("scripts/screen.splash.js", jewel.setup);
 				jewel.load("scripts/screen.main-menu.js");
 				if (jewel.hasWebWorkers()) {
 					jewel.preload("scripts/board.worker.js");
-					jewel.load("scripts/board.worker-interface.js", jewel.setup);
+					jewel.load("scripts/board.worker-interface.js");
 				} else {
-					jewel.load("scripts/board.js", jewel.setup);
+					jewel.load("scripts/board.js");
 				}
 			});
 		</script>
@@ -34,6 +34,10 @@
 		<div id="game">
 			<div class="screen" id="splash-screen">
 				<h1 class="logo">Jewel <br />Warrior</h1>
+				<br />
+				<div class="progress">
+					<div class="indicator"></div>
+				</div>
 				<br />
 				<span class="continue">Click to continue</span>
 			</div>
