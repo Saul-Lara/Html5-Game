@@ -21,13 +21,14 @@
 				jewel.load("scripts/dom.js");
 				jewel.load("scripts/screen.splash.js", jewel.setup);
 				jewel.load("scripts/screen.main-menu.js");
-				jewel.load("scripts/screen.game.js");
 				if (jewel.hasWebWorkers()) {
 					jewel.preload("scripts/board.worker.js");
 					jewel.load("scripts/board.worker-interface.js");
 				} else {
 					jewel.load("scripts/board.js");
 				}
+				jewel.load("scripts/screen.game.js");
+				jewel.load("scripts/display.canvas.js");
 			});
 		</script>
 	</head>
