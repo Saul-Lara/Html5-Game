@@ -102,3 +102,11 @@ ul.menu li button:active {
 	height: 100%;
 	width: 0%;
 }
+
+/* <------ Game screen ------> */
+
+#game-screen .game-board {
+	position: relative;
+	width: 8em;
+	height: 8em;
+}
